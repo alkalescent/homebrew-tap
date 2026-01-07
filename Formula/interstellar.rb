@@ -10,8 +10,8 @@ class Interstellar < Formula
 
   desc "A command-line tool for managing cryptocurrency mnemonics using BIP39 and SLIP39 standards"
   homepage "https://github.com/alkalescent/interstellar"
-  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.1.4.tar.gz"
-  sha256 "544b91551508dd21395597f4b2aa2ed3533e55fbb6f020a82398c5d3c897d9ca"
+  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.1.5.tar.gz"
+  sha256 "52e79caa2060f04fc3345bd7cebf043d45960d3b5458c1adacde23388d72f0b4"
   head "https://github.com/alkalescent/interstellar.git", branch: "master"
   license "MIT"
 
@@ -32,7 +32,7 @@ class Interstellar < Formula
 
   test do
     # Test version command
-    assert_match(/\d+\.\d+\.\d+/, shell_output("#{bin}/interstellar version"))
+    assert_match(/v\d+\.\d+\.\d+/, shell_output("#{bin}/interstellar version"))
 
     # Test help command shows expected subcommands
     help_output = shell_output("#{bin}/interstellar --help")
