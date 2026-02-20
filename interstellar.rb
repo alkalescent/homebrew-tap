@@ -10,8 +10,8 @@ class Interstellar < Formula
 
   desc "A command-line tool for managing cryptocurrency mnemonics using BIP39 and SLIP39 standards"
   homepage "https://github.com/alkalescent/interstellar"
-  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.2.3.tar.gz"
-  sha256 "3cd5a97f3fdd9a7115f577b19920bb611ad458bfc4a6022a0a3cec16bc68dcfb"
+  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.2.4.tar.gz"
+  sha256 "eaa55366b9c55cec4df025c48356e344689830364eff4b69e5c355753668d6e8"
   head "https://github.com/alkalescent/interstellar.git", branch: "master"
   license "MIT"
 
@@ -23,7 +23,7 @@ class Interstellar < Formula
     system python3, "-m", "venv", libexec
     
     # Install the package and all dependencies
-    system libexec/"bin/pip", "install", "--upgrade", "pip"
+    system libexec/"bin/pip", "install", "--upgrade", "pip", "setuptools", "wheel"
     # Set version for setuptools-scm since archive tarballs lack .git metadata
     # Skip for HEAD builds — they use git clone, so setuptools-scm reads tags directly
     ENV["SETUPTOOLS_SCM_PRETEND_VERSION"] = version.to_s unless build.head?
