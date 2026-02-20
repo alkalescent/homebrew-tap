@@ -10,8 +10,8 @@ class Silicon < Formula
 
   desc "A Python CLI hello world template"
   homepage "https://github.com/alkalescent/silicon"
-  url "https://github.com/alkalescent/silicon/archive/refs/tags/v1.1.6.tar.gz"
-  sha256 "3c6f52efe541abd50c74d2cb08b1c59004ef72e40fa71add1f21d9928c0a23ed"
+  url "https://github.com/alkalescent/silicon/archive/refs/tags/v1.1.7.tar.gz"
+  sha256 "c07d105708e10cb736741f39d6282ba6ca1f8ad663e58fd846522e80f9d79bfc"
   head "https://github.com/alkalescent/silicon.git", branch: "master"
   license "MIT"
 
@@ -23,7 +23,7 @@ class Silicon < Formula
     system python3, "-m", "venv", libexec
     
     # Install the package and all dependencies
-    system libexec/"bin/pip", "install", "--upgrade", "pip"
+    system libexec/"bin/pip", "install", "--upgrade", "pip", "setuptools", "wheel"
     # Set version for setuptools-scm since archive tarballs lack .git metadata
     # Skip for HEAD builds — they use git clone, so setuptools-scm reads tags directly
     ENV["SETUPTOOLS_SCM_PRETEND_VERSION"] = version.to_s unless build.head?
