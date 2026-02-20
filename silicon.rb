@@ -10,8 +10,8 @@ class Silicon < Formula
 
   desc "A Python CLI hello world template"
   homepage "https://github.com/alkalescent/silicon"
-  url "https://github.com/alkalescent/silicon/archive/refs/tags/v1.1.5.tar.gz"
-  sha256 "f81ba1e9d7086c89cc91a2cc3cc1fb60ebde7fb1fbffdaaca5ee7bb0355ff967"
+  url "https://github.com/alkalescent/silicon/archive/refs/tags/v1.1.6.tar.gz"
+  sha256 "3c6f52efe541abd50c74d2cb08b1c59004ef72e40fa71add1f21d9928c0a23ed"
   head "https://github.com/alkalescent/silicon.git", branch: "master"
   license "MIT"
 
@@ -24,6 +24,9 @@ class Silicon < Formula
     
     # Install the package and all dependencies
     system libexec/"bin/pip", "install", "--upgrade", "pip"
+    # Set version for setuptools-scm since archive tarballs lack .git metadata
+    # Skip for HEAD builds — they use git clone, so setuptools-scm reads tags directly
+    ENV["SETUPTOOLS_SCM_PRETEND_VERSION"] = version.to_s unless build.head?
     system libexec/"bin/pip", "install", buildpath.to_s
     
     # Create wrapper scripts in bin that use the venv
