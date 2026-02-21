@@ -10,25 +10,24 @@ class Interstellar < Formula
 
   desc "A command-line tool for managing cryptocurrency mnemonics using BIP39 and SLIP39 standards"
   homepage "https://github.com/alkalescent/interstellar"
-  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.2.4.tar.gz"
-  sha256 "eaa55366b9c55cec4df025c48356e344689830364eff4b69e5c355753668d6e8"
+  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.2.5.tar.gz"
+  sha256 "186a5f459873fb56fed0eb0199daced73c459874e783ef942a11dce8d02d1a3c"
   head "https://github.com/alkalescent/interstellar.git", branch: "master"
   license "MIT"
 
   depends_on "python@3.13"
+  depends_on "uv" => :build
 
   def install
-    # Create venv with pip included (not --without-pip)
-    python3 = "python3.13"
-    system python3, "-m", "venv", libexec
-    
-    # Install the package and all dependencies
-    system libexec/"bin/pip", "install", "--upgrade", "pip", "setuptools", "wheel"
+    # Point uv's venv at Homebrew's libexec directory and use a local cache
+    ENV["UV_PROJECT_ENVIRONMENT"] = libexec.to_s
+    ENV["UV_CACHE_DIR"] = (buildpath/".uv_cache").to_s
     # Set version for setuptools-scm since archive tarballs lack .git metadata
     # Skip for HEAD builds — they use git clone, so setuptools-scm reads tags directly
     ENV["SETUPTOOLS_SCM_PRETEND_VERSION"] = version.to_s unless build.head?
-    system libexec/"bin/pip", "install", buildpath.to_s
-    
+    # Install project + locked dependencies from uv.lock (no resolver runs)
+    system "uv", "sync", "--frozen", "--no-dev", "--no-editable", "--python", "python3.13"
+
     # Create wrapper scripts in bin that use the venv
     bin.install_symlink Dir[libexec/"bin/interstellar"]
   end
