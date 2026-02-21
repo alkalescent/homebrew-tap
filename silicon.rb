@@ -10,25 +10,24 @@ class Silicon < Formula
 
   desc "A Python CLI hello world template"
   homepage "https://github.com/alkalescent/silicon"
-  url "https://github.com/alkalescent/silicon/archive/refs/tags/v1.1.7.tar.gz"
-  sha256 "c07d105708e10cb736741f39d6282ba6ca1f8ad663e58fd846522e80f9d79bfc"
+  url "https://github.com/alkalescent/silicon/archive/refs/tags/v1.1.8.tar.gz"
+  sha256 "8026a148186819eeb01eca92a906213630d8dc317ff3b05d352d6678dc3ac396"
   head "https://github.com/alkalescent/silicon.git", branch: "master"
   license "MIT"
 
   depends_on "python@3.13"
+  depends_on "uv" => :build
 
   def install
-    # Create venv with pip included (not --without-pip)
-    python3 = "python3.13"
-    system python3, "-m", "venv", libexec
-    
-    # Install the package and all dependencies
-    system libexec/"bin/pip", "install", "--upgrade", "pip", "setuptools", "wheel"
+    # Point uv's venv at Homebrew's libexec directory and use a local cache
+    ENV["UV_PROJECT_ENVIRONMENT"] = libexec.to_s
+    ENV["UV_CACHE_DIR"] = (buildpath/".uv_cache").to_s
     # Set version for setuptools-scm since archive tarballs lack .git metadata
     # Skip for HEAD builds — they use git clone, so setuptools-scm reads tags directly
     ENV["SETUPTOOLS_SCM_PRETEND_VERSION"] = version.to_s unless build.head?
-    system libexec/"bin/pip", "install", buildpath.to_s
-    
+    # Install project + locked dependencies from uv.lock (no resolver runs)
+    system "uv", "sync", "--frozen", "--no-dev", "--no-editable", "--python", "python3.13"
+
     # Create wrapper scripts in bin that use the venv
     bin.install_symlink Dir[libexec/"bin/silicon"]
   end
