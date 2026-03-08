@@ -10,8 +10,8 @@ class Interstellar < Formula
 
   desc "A command-line tool for managing cryptocurrency mnemonics using BIP39 and SLIP39 standards"
   homepage "https://github.com/alkalescent/interstellar"
-  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.2.5.tar.gz"
-  sha256 "186a5f459873fb56fed0eb0199daced73c459874e783ef942a11dce8d02d1a3c"
+  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.2.6.tar.gz"
+  sha256 "756ce7e8e7257cccd1bfd6c4672cad3ccbf406bc41f1a47f4a0cff7ac9ddb8b7"
   head "https://github.com/alkalescent/interstellar.git", branch: "master"
   license "MIT"
 
@@ -22,10 +22,12 @@ class Interstellar < Formula
     # Point uv's venv at Homebrew's libexec directory and use a local cache
     ENV["UV_PROJECT_ENVIRONMENT"] = libexec.to_s
     ENV["UV_CACHE_DIR"] = (buildpath/".uv_cache").to_s
+    # Install dependencies first (without pretend version to avoid leaking into deps)
+    system "uv", "sync", "--frozen", "--no-dev", "--no-editable", "--no-install-project", "--python", "python3.13"
     # Set version for setuptools-scm since archive tarballs lack .git metadata
     # Skip for HEAD builds — they use git clone, so setuptools-scm reads tags directly
     ENV["SETUPTOOLS_SCM_PRETEND_VERSION"] = version.to_s unless build.head?
-    # Install project + locked dependencies from uv.lock (no resolver runs)
+    # Install project (dependencies already satisfied, won't be rebuilt)
     system "uv", "sync", "--frozen", "--no-dev", "--no-editable", "--python", "python3.13"
 
     # Create wrapper scripts in bin that use the venv
