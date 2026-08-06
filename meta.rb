@@ -1,18 +1,18 @@
 class Meta < Formula
   desc "Project intelligence layer — instantly surface what any codebase is, how it's structured, and what you need to know."
   homepage "https://github.com/alkalescent/meta"
-  url "https://github.com/alkalescent/meta/archive/refs/tags/v1.6.0.tar.gz"
-  sha256 "3e38425af0ced357e8a9cc8fedf4bf57d3f336d3568ea8010e0ebd7293f1b693"
+  url "https://github.com/alkalescent/meta/archive/refs/tags/v1.7.0.tar.gz"
+  sha256 "506eec2f6f2440990e13c3209d4bfa675c3e88371d5ab4ae4e2bd03358b88cca"
   head "https://github.com/alkalescent/meta.git", branch: "master"
   
   depends_on "python@3.13"
+  depends_on "uv"
   
   def install
     system "make", "build", "MODE=standalone", "CI=true"
-    bin.install "cli.dist/meta"
-    # Move the dist contents to libexec to avoid polluting bin
+    # Install the whole dist dir (binary + its support files) into libexec
+    # to avoid polluting bin, then symlink just the binary into bin.
     libexec.install Dir["cli.dist/*"]
-    # Create symlink from bin to libexec
     bin.install_symlink libexec/"meta"
   end
 
