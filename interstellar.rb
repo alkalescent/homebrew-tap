@@ -10,8 +10,8 @@ class Interstellar < Formula
 
   desc "A command-line tool for managing cryptocurrency mnemonics using BIP39 and SLIP39 standards"
   homepage "https://github.com/alkalescent/interstellar"
-  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.4.0.tar.gz"
-  sha256 "a4ef171d6adbd9d8d5ba552f52b924af2b9c0e99f9e9be557dc56c6f72c71525"
+  url "https://github.com/alkalescent/interstellar/archive/refs/tags/v1.5.0.tar.gz"
+  sha256 "be8e87c07b464d29fdbbe08a69ae82f016428fb362d2564b81595e103977e0d4"
   head "https://github.com/alkalescent/interstellar.git", branch: "master"
   license "MIT"
 
