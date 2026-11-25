@@ -10,8 +10,8 @@ class Silicon < Formula
 
   desc "A Python CLI hello world template"
   homepage "https://github.com/alkalescent/silicon"
-  url "https://github.com/alkalescent/silicon/archive/refs/tags/v1.2.0.tar.gz"
-  sha256 "1358a776f6f8a93d8b2f94322d94950d9c940dd9e579293b98d00e6a6a6c2566"
+  url "https://github.com/alkalescent/silicon/archive/refs/tags/v1.3.0.tar.gz"
+  sha256 "f06ea7401a8d0dfb37ea963841b8db0582338855e618f935ac1ace8413ab3e9c"
   head "https://github.com/alkalescent/silicon.git", branch: "master"
   license "MIT"
 
